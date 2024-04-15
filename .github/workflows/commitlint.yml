@@ -27,8 +27,8 @@ jobs:
 
       - name: Install commitlint
         run: |
-          npm install @commitlint/cli@18
-          npm install @commitlint/config-conventional@18
+          npm install @commitlint/cli
+          npm install @commitlint/config-conventional
 
       - name: Print versions
         run: |
