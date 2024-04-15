@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"test\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "git:clean:origin": "git fetch -p",
+    "git:clean:local": "git branch --v | grep \"\\[gone\\]\" | awk '{print $1}' | xargs git branch -D",
+    "git:clean": "npm run git:clean:origin && npm run git:clean:local"
   },
   "author": "",
   "license": "ISC",
