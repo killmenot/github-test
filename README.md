@@ -12,4 +12,5 @@ meet you and you may call me V.
 
 ### Features
 
+- feature2
 - feature3
