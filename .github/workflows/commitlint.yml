@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
@@ -45,7 +45,7 @@ jobs:
 
       - name: Validate PR title with commitlint
         if: github.event_name == 'pull_request'
-        uses: kevintyj/prlint@v1
+        uses: kevintyj/prlint@v1.0.0
         with:
           cl-config: commitlint.config.js
 
