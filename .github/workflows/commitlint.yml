@@ -27,8 +27,8 @@ jobs:
 
       - name: Install commitlint
         run: |
-          npm install @commitlint/cli
-          npm install @commitlint/config-conventional
+          npm install @commitlint/cli@18
+          npm install @commitlint/config-conventional@18
 
       - name: Print versions
         run: |
@@ -48,7 +48,5 @@ jobs:
       - name: Validate PR title with commitlint
         if: github.event_name == 'pull_request'
         uses: kevintyj/prlint@v1
-        with:
-          cl-config: commitlint-cjs.config.cjs
 
 
