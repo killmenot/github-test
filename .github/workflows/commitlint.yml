@@ -45,8 +45,6 @@ jobs:
 
       - name: Validate PR title with commitlint
         if: github.event_name == 'pull_request'
-        uses: kevintyj/prlint@v1.0.0
-        with:
-          cl-config: commitlint.config.js
+        uses: JulienKode/pull-request-name-linter-action@v0.5.0
 
 
