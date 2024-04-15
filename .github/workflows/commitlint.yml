@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - develop
-      - releases/**
+      - release/**
   pull_request:
     branches:
       - develop
-      - features/**
+      - feature/**
       - bug/**
       - hotfix/**
 

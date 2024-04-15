@@ -12,6 +12,6 @@ meet you and you may call me V.
 
 ### Features
 
-- feat: feature1
+- feature1
 - feature2
 - feature3
