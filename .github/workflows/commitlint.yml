@@ -22,7 +22,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'npm'
 
       - name: Install dependencies
@@ -45,6 +45,6 @@ jobs:
 
       - name: Validate PR title with commitlint
         if: github.event_name == 'pull_request'
-        uses: JulienKode/pull-request-name-linter-action@v0.5.0
+        uses: kevintyj/prlint@v1
 
 
