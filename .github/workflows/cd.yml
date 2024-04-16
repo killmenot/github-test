@@ -17,21 +17,18 @@ concurrency:
 # ghcr.io/swiftdrivecorp/frontend-admin-prodution:123456
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: github
-              run: echo "${{ toJSON(github) }}"
-            - name: GITHUB_EVENT_NAME
-              run: echo $GITHUB_EVENT_NAME
-
-            # - id: extract
-            #   name: Extract name
-            #   run: echo "tf-workspace=$([[ $GITHUB_REF_NAME == 'main' ]] && echo 'qa2' || ( [[ $GITHUB_EVENT_NAME == 'release' ]] && ( [[ '${{ github.event.action }}' == 'prereleased' ]] && echo 'stage' || ( [[ '${{ github.event.action }}' == 'released' ]] && echo 'prod' || echo '' ) ) || echo '' ))" >> $GITHUB_OUTPUT
-            # - name: Test extract name
-            #   run: 'echo "Extracted environment name: $EXTRACTED"'
-            #   env:
-            #       EXTRACTED: ${{ steps.extract.outputs.tf-workspace }}
+  test:
+    name: "Extract environment name"
+    runs-on: ubuntu-latest
+    outputs:
+      swf-environment: ${{ steps.extract.outputs.environment }}
+    steps:
+      - id: extract
+        run: echo "swf-environment=$([[ '${{ github.event.action }}' == 'prereleased' ]] && echo 'staging' || echo 'production')" >> $GITHUB_OUTPUT
+      - id: test
+        run: 'echo "Extracted environment name: $EXTRACTED"'
+        env:
+          EXTRACTED: ${{ steps.extract.outputs.swf-environment }}
 
 
 
