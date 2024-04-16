@@ -8,27 +8,40 @@ concurrency:
     group: cd-${{ github.ref }}
     cancel-in-progress: false
 
-# env:
-#     REPO_URL: ghcr.io
-#     REPO_PROJECT: swiftdrivecorp
-#     REPO_CONFIG: infra-deploy
-
-# ghcr.io/swiftdrivecorp/frontend-admin-staging:123456
-# ghcr.io/swiftdrivecorp/frontend-admin-prodution:123456
-
 jobs:
-  test:
-    name: "Extract environment name"
+  build-and-push:
+    name: "Build and push docker image"
     runs-on: ubuntu-latest
     outputs:
-      swf-environment: ${{ steps.extract.outputs.environment }}
+      environment: ${{ steps.extract.outputs.environment }}
     steps:
       - id: extract
-        run: echo "swf-environment=$([[ '${{ github.event.action }}' == 'prereleased' ]] && echo 'staging' || echo 'production')" >> $GITHUB_OUTPUT
-      - id: test
-        run: 'echo "Extracted environment name: $EXTRACTED"'
+        name: Extract environment
+        run: echo "environment=$([[ '${{ github.event.action }}' == 'prereleased' ]] && echo 'staging' || echo 'production')" >> $GITHUB_OUTPUT
+
+      - name: Print environment
+        run: 'echo "Extracted environment: $EXTRACTED"'
         env:
-          EXTRACTED: ${{ steps.extract.outputs.swf-environment }}
+          EXTRACTED: ${{ steps.extract.outputs.environment }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build docker image
+        run: |
+          docker build -t ghcr.io/killmenot/github-test-${{ steps.extract.outputs.environment }}:${{ github.event.release.tag_name }} -f Dockerfile .
+
+      - name: Push docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/killmenot/github-test-${{ steps.extract.outputs.environment }}:${{ github.event.release.tag_name }}
+
 
 
 
