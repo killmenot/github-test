@@ -24,6 +24,15 @@ jobs:
         env:
           EXTRACTED: ${{ steps.extract.outputs.environment }}
 
+      - name: Print variables
+        run: 'echo ${{ toJSON(vars)}}'
+
+      - name: Print env
+        run: 'echo ${{ toJSON(env)}}'
+
+      - name: Print secrets
+        run: 'echo ${{ toJSON(secrets)}}'
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
