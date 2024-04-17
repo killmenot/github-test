@@ -29,18 +29,15 @@ jobs:
           EXTRACTED: ${{ steps.extract.outputs.environment }}
 
       - name: Print variables
-        environment:
-          name: ${{ steps.extract.outputs.environment }}
+        environment: staging
         run: echo "${{ toJSON(vars)}}"
 
       - name: Print env
-        environment:
-          name: ${{ steps.extract.outputs.environment }}
+        environment: staging
         run: echo "${{ toJSON(env)}}"
 
       - name: Print secrets
-        environment:
-          name: ${{ steps.extract.outputs.environment }}
+        environment: staging
         run: echo "${{ toJSON(secrets)}}"
 
       - name: Checkout repository
