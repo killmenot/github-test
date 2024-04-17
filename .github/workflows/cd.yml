@@ -16,19 +16,8 @@ jobs:
   build-and-push:
     name: "Build and push docker image"
     runs-on: ubuntu-latest
-    environment: staging
-    outputs:
-      environment: $([[ '${{ github.event.action }}' == 'prereleased' ]] && 'staging' || 'production')
+    environment: $([[ '${{ github.event.action }}' == 'prereleased' ]] && 'staging' || 'production')
     steps:
-      # - id: extract
-      #   name: Extract environment
-      #   run: echo "environment=" >> $GITHUB_OUTPUT
-
-      # - name: Print environment
-      #   run: 'echo "Extracted environment: $EXTRACTED"'
-      #   env:
-      #     EXTRACTED: ${{ steps.extract.outputs.environment }}
-
       - name: Print variables
         run: echo "${{ toJSON(vars)}}"
 
