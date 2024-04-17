@@ -8,6 +8,10 @@ concurrency:
     group: cd-${{ github.ref }}
     cancel-in-progress: false
 
+env:
+  TEST_1: test_1
+  TEST_2: test_2
+
 jobs:
   build-and-push:
     name: "Build and push docker image"
@@ -25,12 +29,18 @@ jobs:
           EXTRACTED: ${{ steps.extract.outputs.environment }}
 
       - name: Print variables
+        environment:
+          name: ${{ steps.extract.outputs.environment }}
         run: echo "${{ toJSON(vars)}}"
 
       - name: Print env
+        environment:
+          name: ${{ steps.extract.outputs.environment }}
         run: echo "${{ toJSON(env)}}"
 
       - name: Print secrets
+        environment:
+          name: ${{ steps.extract.outputs.environment }}
         run: echo "${{ toJSON(secrets)}}"
 
       - name: Checkout repository
