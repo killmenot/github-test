@@ -18,16 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     outputs:
-      environment: ${{ steps.extract.outputs.environment }}
+      environment: $([[ '${{ github.event.action }}' == 'prereleased' ]] && 'staging' || 'production')
     steps:
-      - id: extract
-        name: Extract environment
-        run: echo "environment=$([[ '${{ github.event.action }}' == 'prereleased' ]] && echo 'staging' || echo 'production')" >> $GITHUB_OUTPUT
+      # - id: extract
+      #   name: Extract environment
+      #   run: echo "environment=" >> $GITHUB_OUTPUT
 
-      - name: Print environment
-        run: 'echo "Extracted environment: $EXTRACTED"'
-        env:
-          EXTRACTED: ${{ steps.extract.outputs.environment }}
+      # - name: Print environment
+      #   run: 'echo "Extracted environment: $EXTRACTED"'
+      #   env:
+      #     EXTRACTED: ${{ steps.extract.outputs.environment }}
 
       - name: Print variables
         run: echo "${{ toJSON(vars)}}"
@@ -38,23 +38,23 @@ jobs:
       - name: Print secrets
         run: echo "${{ toJSON(secrets)}}"
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # - name: Checkout repository
+      #   uses: actions/checkout@v4
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build docker image
-        run: |
-          docker build -t ghcr.io/killmenot/github-test-${{ steps.extract.outputs.environment }}:${{ github.event.release.tag_name }} -f Dockerfile .
+      # - name: Build docker image
+      #   run: |
+      #     docker build -t ghcr.io/killmenot/github-test-${{ steps.extract.outputs.environment }}:${{ github.event.release.tag_name }} -f Dockerfile .
 
-      - name: Push docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/killmenot/github-test-${{ steps.extract.outputs.environment }}:${{ github.event.release.tag_name }}
+      # - name: Push docker image to GitHub Container Registry
+      #   run: |
+      #     docker push ghcr.io/killmenot/github-test-${{ steps.extract.outputs.environment }}:${{ github.event.release.tag_name }}
 
 
 
