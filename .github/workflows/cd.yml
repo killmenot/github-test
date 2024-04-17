@@ -11,6 +11,7 @@ concurrency:
 env:
   TEST_1: test_1
   TEST_2: test_2
+  VALUE: ${{ github.event.action == 'prereleased' && 'staging' || 'production' }}
 
 jobs:
   build-and-push:
