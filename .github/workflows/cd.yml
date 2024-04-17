@@ -16,6 +16,7 @@ jobs:
   build-and-push:
     name: "Build and push docker image"
     runs-on: ubuntu-latest
+    environment: staging
     outputs:
       environment: ${{ steps.extract.outputs.environment }}
     steps:
@@ -29,15 +30,12 @@ jobs:
           EXTRACTED: ${{ steps.extract.outputs.environment }}
 
       - name: Print variables
-        environment: staging
         run: echo "${{ toJSON(vars)}}"
 
       - name: Print env
-        environment: staging
         run: echo "${{ toJSON(env)}}"
 
       - name: Print secrets
-        environment: staging
         run: echo "${{ toJSON(secrets)}}"
 
       - name: Checkout repository
