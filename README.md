@@ -20,3 +20,6 @@ meet you and you may call me V... lorem ipsum lorem ipsum
 - feature5
 - feature6
 - feature7
+- feature8
+- feature9
+- feature10
