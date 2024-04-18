@@ -14,5 +14,8 @@ meet you and you may call me V.
 
 - feature1
 - feature2
+- hotfix1
 - feature3
 - feature4
+- feature5
+- feature6
