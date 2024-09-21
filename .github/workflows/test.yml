@@ -1,10 +1,23 @@
 name: Test
 
-on: [push, pull_request, release]
+on: [push]
 
 jobs:
-  test:
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print github context
+  #       run: echo '${{ toJSON(github) }}'
+
+  clean:
     runs-on: ubuntu-latest
+    name: Delete old test images
     steps:
-      - name: Print github context
-        run: echo '${{ toJSON(github) }}'
+      - uses: snok/container-retention-policy@v3.0.0
+        with:
+          account: killmenot
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image-names: "github-test-staging"
+          image-tags: "*alpha*"
+          cut-off: 1m
+          dry-run: true
